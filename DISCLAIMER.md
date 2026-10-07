@@ -23,5 +23,18 @@ advocate — for filings, assessments, notices, and any material decision. The a
 contributors accept no liability for any loss, penalty or interest arising from use of this
 material.
 
+**Transitions in progress (as of October 2026).** Two large changes may have moved things since
+these files were written, so treat anything specific as needing confirmation:
+
+- A new **Income-tax Act, 2025** is reported to replace the Income-tax Act, 1961 and **renumbers
+  sections**. The TDS skill refers to sections by their long-standing numbers (192, 194C, 194J,
+  195, …) — these may now be different. Confirm the current section on https://www.incometax.gov.in.
+- India's **four Labour Codes** (Wages; Industrial Relations; Social Security; Occupational Safety)
+  are being brought into force and can change the statutory definition of *wages*, which feeds
+  **PF, ESI, gratuity and bonus**. Confirm current rules on https://www.epfindia.gov.in,
+  https://www.esic.gov.in and the relevant code before computing payroll.
+
 **Snapshots.** Where a reference file states a specific number, it is labelled with the date it was
 written and is a snapshot for orientation, not a live figure.
+
+**Last reviewed:** October 2026.

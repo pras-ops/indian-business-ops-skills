@@ -23,6 +23,12 @@ user.
 > Professional Tax law, and the Income-tax Act, and they change. Professional Tax and Labour
 > Welfare Fund are **state-specific**. Never assert a current rate or ceiling from memory — confirm
 > on the relevant portal (links below). The reference file holds dated snapshots only.
+>
+> **Labour Codes:** India's four Labour Codes are being brought into force and can change the
+> statutory definition of *wages* (and the rule that certain allowances count toward it). That
+> directly affects PF, ESI, gratuity and bonus. Treat the mechanics below as the established
+> position and confirm the current wage definition and rates on the official portals before
+> computing a real payroll.
 
 ## Salary structure first
 

@@ -16,6 +16,16 @@ registrations, invoicing and Tally.
 > trusting a number baked into a file. This is an operations assistant, **not** a substitute for a
 > Chartered Accountant, Company Secretary or lawyer. Read [DISCLAIMER.md](DISCLAIMER.md).
 
+> [!WARNING]
+> **Content last reviewed: October 2026 — two large transitions are under way, so verify before
+> relying on any specifics.** A new **Income-tax Act, 2025** is reported to replace the Income-tax
+> Act, 1961, which **renumbers sections** — so the section numbers used in the TDS skill (192,
+> 194C, 194J, …) may no longer be current; confirm the present section on
+> https://www.incometax.gov.in. India's **four Labour Codes** are being brought into force, which
+> can change the statutory definition of *wages* and therefore **PF, ESI and gratuity** amounts;
+> confirm on https://www.epfindia.gov.in and the relevant code. The skills are built to send the
+> agent to these portals for the live position rather than to answer from the files.
+
 ---
 
 ## What's in the pack
@@ -35,7 +45,28 @@ a `references/` directory the agent reads only when it needs it.
 
 ## Install
 
-**Claude Code** — copy any skill folder into your skills directory:
+### One-click install (`.skill` download)
+
+Pre-built, validated `.skill` packages are in [`dist/`](dist/). On **Claude.ai / Claude apps**,
+download a `.skill` file and open it, or upload it under **Settings → Capabilities → Skills**
+(where your workspace allows custom skills) — it installs in one step.
+
+| Skill | Download |
+|---|---|
+| GST | [`dist/gst-compliance.skill`](dist/gst-compliance.skill) |
+| TDS / TCS | [`dist/tds-compliance.skill`](dist/tds-compliance.skill) |
+| Payroll & statutory | [`dist/payroll-statutory.skill`](dist/payroll-statutory.skill) |
+| Company / ROC | [`dist/company-roc-compliance.skill`](dist/company-roc-compliance.skill) |
+| Registrations & licences | [`dist/business-registrations-licenses.skill`](dist/business-registrations-licenses.skill) |
+| Invoicing / e-invoice / e-way | [`dist/invoicing-einvoice-eway.skill`](dist/invoicing-einvoice-eway.skill) |
+| Tally | [`dist/tally-operations.skill`](dist/tally-operations.skill) |
+
+A `.skill` file is just a zip of the skill folder; rebuild them any time with
+[`scripts/build-skills.sh`](scripts/build-skills.sh).
+
+### From source (Claude Code)
+
+Copy any skill folder into your skills directory:
 
 ```bash
 # one skill, for your user account

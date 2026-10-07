@@ -24,6 +24,12 @@ quarterly returns and issue the certificates.
 > and change most years. Never assert a current rate or threshold from memory. Confirm it on the
 > Income Tax Department site (https://www.incometax.gov.in) or the TRACES portal
 > (https://www.tdscpc.gov.in). The reference files here are dated snapshots.
+>
+> **Section renumbering:** a new Income-tax Act, 2025 is reported to replace the 1961 Act and
+> change section numbers. The 192 / 194-series numbers used below are the long-standing ones and
+> may no longer be current — identify the payment type first (salary, contract, professional fee,
+> rent, …) and confirm the *present* section and rate on the portal rather than relying on the
+> number itself.
 
 ## The four questions, in order
 
