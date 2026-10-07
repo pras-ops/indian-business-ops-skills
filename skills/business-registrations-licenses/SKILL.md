@@ -66,6 +66,20 @@ Only if the activity needs them:
 - **Sector permits** — e.g. drug licence, pollution-control consent, professional councils, RBI/SEBI
   registrations for regulated finance, etc. Flag these; they're specialised.
 
+## Deterministic helper — validate a PAN with the script
+
+This skill bundles [`scripts/pan.py`](scripts/pan.py). When a user gives you a PAN, validate it
+and read its entity type with the script rather than eyeballing the pattern — the 4th character
+tells you whether the holder is an individual, company, firm/LLP, trust and so on, which often
+decides what they can register for.
+
+```bash
+python scripts/pan.py AAPFU0939F   # → {"valid": true, "entity_type": "Firm / LLP"}
+```
+
+(PAN has no public checksum, so this validates the published structure and decodes the entity
+character; for a GSTIN, the `gst-compliance` skill's `gst_calc.py` checks the full check digit.)
+
 ## How to help, concretely
 
 - **"How do I start X in India?"** — recommend a structure with reasoning, then produce an ordered

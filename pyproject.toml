@@ -1,0 +1,4 @@
+# Tooling config for the deterministic helper scripts and their tests.
+# The skills themselves are plain Markdown; this is only for the Python in skills/*/scripts.
+[tool.pytest.ini_options]
+testpaths = ["tests"]

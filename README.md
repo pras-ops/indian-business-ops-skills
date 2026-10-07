@@ -41,7 +41,19 @@ registrations, invoicing and Tally.
 | [`tally-operations`](skills/tally-operations) | Moving data in and out of Tally (XML/Excel), voucher structure, and reconciling books to returns |
 
 Each skill is a folder with a `SKILL.md` and, where the detail is large or volatile,
-a `references/` directory the agent reads only when it needs it.
+a `references/` directory the agent reads only when it needs it. Where work must be exact
+(validating a GSTIN or PAN, splitting CGST/SGST/IGST), the skill calls a small **deterministic
+helper script** instead of asking the model to compute it.
+
+## Design doctrine
+
+> **The language model decides what to do. Code decides the numbers.**
+
+Exact computations and validation live in tested Python ([`tests/`](tests)); volatile law (rates,
+thresholds, due dates) is never hardcoded but confirmed on the official portal at run time;
+judgement and explanation stay with the model. This is the layer that sits *between* an AI agent
+and the business's software and portals — the "skills + deterministic engine" layer, not an action
+layer that files on its own. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Install
 

@@ -82,6 +82,26 @@ set of conditions are *all* met, and several categories are **blocked** regardle
 [`references/itc-rules.md`](references/itc-rules.md) before answering any credit-eligibility or
 2B-reconciliation question.
 
+## Deterministic helpers — use the script, don't compute by hand
+
+This skill bundles [`scripts/gst_calc.py`](scripts/gst_calc.py) for the parts that must be exact.
+Call it rather than working the arithmetic or a checksum out yourself — a validator and a
+calculator don't make the mistakes a model making them in prose will, and the whole pack's design
+rule is that **code decides the numbers**.
+
+```bash
+python scripts/gst_calc.py validate 27AAPFU0939F1ZV   # GSTIN structure + check digit + state
+python scripts/gst_calc.py parse    27AAPFU0939F1ZV   # → state, embedded PAN, entity type
+python scripts/gst_calc.py split --taxable 1000 --rate 18 --intra   # CGST+SGST (intra-state)
+python scripts/gst_calc.py split --taxable 1000 --rate 18           # IGST (inter-state)
+```
+
+- **Validate every GSTIN** a user gives you before trusting it — the check digit catches the single-
+  character typos that silently block a buyer's input tax credit.
+- The `--rate` is **supplied by you from the portal rate finder**, never assumed by the script; this
+  is deterministic arithmetic on a rate you've confirmed, not a guess at the slab.
+- `split` keeps `cgst + sgst == total_tax` to the paisa, so invoice totals reconcile.
+
 ## How to help, concretely
 
 - **Preparing a return:** help assemble and sanity-check the data (totals tie out, tax type correct,

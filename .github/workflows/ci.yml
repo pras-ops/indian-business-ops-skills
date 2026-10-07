@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    name: Lint, test, validate skills and rebuild packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tooling
+        run: python -m pip install --upgrade pip pytest ruff pyyaml
+
+      - name: Lint deterministic helpers and tests
+        run: ruff check skills tests
+
+      - name: Test deterministic helpers
+        run: python -m pytest -q
+
+      - name: Validate every SKILL.md has valid frontmatter
+        run: python scripts/validate_skills.py
+
+      - name: Rebuild .skill packages (smoke test — packaging must succeed)
+        # Not byte-compared: .skill zips embed timestamps, so a rebuild is never identical.
+        # This just proves every skill still packages cleanly.
+        run: bash scripts/build-skills.sh
