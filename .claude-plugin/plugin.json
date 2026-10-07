@@ -1,0 +1,12 @@
+{
+  "name": "indian-business-ops",
+  "version": "1.1.0",
+  "description": "Agent Skills for Indian business compliance (GST, TDS, payroll, ROC/MCA, registrations, invoicing, Tally). The skills under skills/ are auto-discovered.",
+  "author": {
+    "name": "Prashant Jacob",
+    "url": "https://github.com/pras-ops"
+  },
+  "homepage": "https://github.com/pras-ops/indian-business-ops-skills",
+  "license": "MIT",
+  "keywords": ["india", "gst", "tds", "payroll", "tally", "compliance", "agent-skills"]
+}

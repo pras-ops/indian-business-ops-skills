@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # GST returns — the form map
 
 > Snapshot written October 2026. Due dates and thresholds change; confirm the live value on the

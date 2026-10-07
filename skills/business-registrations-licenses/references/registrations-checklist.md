@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # Registrations and licences — who issues what
 
 > Snapshot written October 2026. Thresholds, fees and processes change; several items are

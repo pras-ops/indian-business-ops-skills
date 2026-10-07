@@ -24,6 +24,18 @@ running Tally licence.
 > always import into a **test company first**. Treat tax rates/fields per the `gst-compliance` and
 > `tds-compliance` skills — don't bake rates into mappings.
 
+## Reading live Tally data (the action layer)
+
+This skill works with files you export and import. To let an agent read a *running* Tally
+company directly (outstanding receivables, live P&L, this month's GST liability), the clean route
+is a **Tally MCP server** — a separate action-layer component that exposes Tally over the Model
+Context Protocol, which these skills can then drive. Keep that integration as its own component
+with its own access control; this skill stays the "understand and map the data" layer, not the
+"log in and change the books" layer.
+
+<!-- Add a verified link here: an open-source Tally MCP server you have checked (name, repo,
+     licence). Left blank on purpose rather than citing an unverified one. -->
+
 ## How Tally exchanges data
 
 Read [`references/tally-xml-and-import.md`](references/tally-xml-and-import.md) for the concrete

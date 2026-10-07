@@ -19,13 +19,19 @@ jobs:
         run: python -m pip install --upgrade pip pytest ruff pyyaml
 
       - name: Lint deterministic helpers and tests
-        run: ruff check skills tests
+        run: ruff check skills tests scripts evals
 
       - name: Test deterministic helpers
         run: python -m pytest -q
 
       - name: Validate every SKILL.md has valid frontmatter
         run: python scripts/validate_skills.py
+
+      - name: Check reference files are marked and fresh (flag > 90 days)
+        run: python scripts/check_freshness.py --max-age-days 90
+
+      - name: Deterministic accuracy eval
+        run: python evals/run_deterministic.py
 
       - name: Rebuild .skill packages (smoke test — packaging must succeed)
         # Not byte-compared: .skill zips embed timestamps, so a rebuild is never identical.

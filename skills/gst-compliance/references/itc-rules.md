@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # Input Tax Credit (ITC)
 
 > Snapshot written October 2026. ITC conditions and the blocked-credit list are set by the CGST

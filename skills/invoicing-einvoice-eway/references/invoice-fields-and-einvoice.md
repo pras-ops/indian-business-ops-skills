@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # Invoice fields, e-invoice and e-way bill
 
 > Snapshot written October 2026. Field rules and thresholds are set by the CGST Rules and changed

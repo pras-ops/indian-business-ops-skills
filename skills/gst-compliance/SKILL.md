@@ -115,6 +115,13 @@ python scripts/gst_calc.py split --taxable 1000 --rate 18           # IGST (inte
 - **A "what rate / which form" question:** confirm the live value on the portal rather than
   answering from memory, and show the user where you got it.
 
+## Privacy
+
+GSTINs embed a PAN, and GST work often involves other identifiers. Before a user pastes invoices
+or registers, remind them to share only what's needed and to mask identifiers they don't — a wrong
+or over-shared PAN/Aadhaar is both a compliance and a privacy risk. On-device redaction tooling
+(e.g. RedactKit) can strip these before text leaves the machine.
+
 ## Guardrails
 
 - State the structure confidently; mark any specific number as "verify on the portal" unless the

@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # TDS sections — matching a payment to a section
 
 > Snapshot written October 2026 (orientation for FY 2025-26 era). Rates and thresholds are set by

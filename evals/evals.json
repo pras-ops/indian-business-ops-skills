@@ -1,0 +1,37 @@
+{
+  "name": "indian-business-ops-skills",
+  "note": "Two kinds of eval. graded_by 'script' items are checked automatically by run_deterministic.py against the bundled helpers (the computational core). graded_by 'llm' items are judgement questions for the full with-skill vs without-skill benchmark; see README.md.",
+  "evals": [
+    {"id": 1,  "category": "gstin",     "graded_by": "script", "input": "27AAPFU0939F1ZV", "expect_valid": true,  "note": "valid Maharashtra GSTIN"},
+    {"id": 2,  "category": "gstin",     "graded_by": "script", "input": "07AAGFF2194N1Z1", "expect_valid": true,  "note": "valid Delhi GSTIN"},
+    {"id": 3,  "category": "gstin",     "graded_by": "script", "input": "27AAPFU0939F1ZX", "expect_valid": false, "note": "check-digit typo"},
+    {"id": 4,  "category": "gstin",     "graded_by": "script", "input": "29GGGGG1314R9Z6", "expect_valid": false, "note": "illustrative GSTIN with wrong check digit"},
+    {"id": 5,  "category": "gstin",     "graded_by": "script", "input": "1234",            "expect_valid": false, "note": "wrong length"},
+    {"id": 6,  "category": "gstin",     "graded_by": "script", "input": "00AAPFU0939F1ZV", "expect_valid": false, "note": "unknown state code 00"},
+    {"id": 7,  "category": "gstin",     "graded_by": "script", "input": "07AA1FU0939F1ZX", "expect_valid": false, "note": "malformed embedded PAN"},
+    {"id": 8,  "category": "pan",       "graded_by": "script", "input": "AAACI1234A", "expect_valid": true, "expect_entity": "Company"},
+    {"id": 9,  "category": "pan",       "graded_by": "script", "input": "ABCPK1234Q", "expect_valid": true, "expect_entity": "Individual"},
+    {"id": 10, "category": "pan",       "graded_by": "script", "input": "AAPFU0939F", "expect_valid": true, "expect_entity": "Firm / LLP"},
+    {"id": 11, "category": "pan",       "graded_by": "script", "input": "AAATR4321H", "expect_valid": true, "expect_entity": "Trust"},
+    {"id": 12, "category": "pan",       "graded_by": "script", "input": "AAPFU0939",  "expect_valid": false, "note": "too short"},
+    {"id": 13, "category": "pan",       "graded_by": "script", "input": "AAAXU0939F", "expect_valid": false, "note": "invalid entity character"},
+    {"id": 14, "category": "tax_split", "graded_by": "script", "taxable": 100000, "rate": 18, "intra": true,  "expect": {"cgst": 9000.0, "sgst": 9000.0, "igst": 0.0, "total_tax": 18000.0, "invoice_total": 118000.0}},
+    {"id": 15, "category": "tax_split", "graded_by": "script", "taxable": 250000, "rate": 18, "intra": false, "expect": {"cgst": 0.0, "sgst": 0.0, "igst": 45000.0, "total_tax": 45000.0, "invoice_total": 295000.0}},
+    {"id": 16, "category": "tax_split", "graded_by": "script", "taxable": 40000,  "rate": 5,  "intra": true,  "expect": {"cgst": 1000.0, "sgst": 1000.0, "igst": 0.0, "total_tax": 2000.0, "invoice_total": 42000.0}},
+    {"id": 17, "category": "tax_split", "graded_by": "script", "taxable": 18000,  "rate": 18, "intra": false, "expect": {"cgst": 0.0, "sgst": 0.0, "igst": 3240.0, "total_tax": 3240.0, "invoice_total": 21240.0}},
+
+    {"id": 18, "category": "tds_section",   "graded_by": "llm", "prompt": "We're paying a freelance graphic designer ₹80,000 for a logo. Do we deduct TDS and under which section?", "expected": "Section 194J (professional fees), standard rate; confirm current rate/threshold on the portal."},
+    {"id": 19, "category": "tds_section",   "graded_by": "llm", "prompt": "Monthly office rent is ₹60,000 to the landlord. TDS?", "expected": "Section 194I (rent), building rate; threshold applies — verify current figures."},
+    {"id": 20, "category": "tds_section",   "graded_by": "llm", "prompt": "We paid a civil contractor ₹5,00,000 for office fit-out. Which TDS section and what changes the rate?", "expected": "Section 194C; rate differs individual/HUF vs others; check PAN (206AA) and filing status (206AB)."},
+    {"id": 21, "category": "tds_nonresident","graded_by": "llm", "prompt": "We pay a US-based consultant. Can we use 194J?", "expected": "No — payments to non-residents fall under section 195, with surcharge/cess and possible DTAA relief (15CA/15CB); not a resident 194 section."},
+    {"id": 22, "category": "gst_tax_type",  "graded_by": "llm", "prompt": "We're in Maharashtra selling to a customer in Gujarat. CGST+SGST or IGST?", "expected": "Inter-state → IGST, because place of supply is a different state."},
+    {"id": 23, "category": "gst_tax_type",  "graded_by": "llm", "prompt": "Both we and our customer are in Karnataka. Which taxes on the invoice?", "expected": "Intra-state → CGST + SGST, half each."},
+    {"id": 24, "category": "einvoice",      "graded_by": "llm", "prompt": "Do we need to generate an e-invoice (IRN/QR)?", "expected": "Depends on aggregate turnover crossing the notified e-invoice threshold; applies to B2B/exports/credit-debit notes, not B2C. Confirm current threshold on the portal."},
+    {"id": 25, "category": "return_type",   "graded_by": "llm", "prompt": "Turnover is about ₹2 crore. Do we file GST monthly or quarterly?", "expected": "Eligible for QRMP (quarterly returns, monthly payment) if at/under the turnover limit; GSTR-1/3B quarterly, tax paid monthly. Verify the current limit."},
+    {"id": 26, "category": "document_type", "graded_by": "llm", "prompt": "We're registered under the composition scheme. Do we issue a tax invoice?", "expected": "No — a composition dealer issues a bill of supply and cannot charge GST the normal way."},
+    {"id": 27, "category": "itc_blocked",   "graded_by": "llm", "prompt": "Can we claim input tax credit on a team lunch at a restaurant?", "expected": "Generally blocked under section 17(5) (food and beverages), unless used to make an outward taxable supply of the same category or obligatory under law."},
+    {"id": 28, "category": "eway_bill",     "graded_by": "llm", "prompt": "We're shipping goods worth ₹80,000 interstate by road. e-way bill?", "expected": "Likely yes above the consignment-value threshold; Part A + Part B; thresholds/exemptions vary by state — verify."},
+    {"id": 29, "category": "entity_choice", "graded_by": "llm", "prompt": "Solo founder, wants limited liability and plans to raise VC later. Proprietorship, LLP or Pvt Ltd?", "expected": "Private Limited — suits funding/ESOPs/investors despite higher compliance; proprietorship has unlimited liability and can't raise equity."},
+    {"id": 30, "category": "payroll",       "graded_by": "llm", "prompt": "Is Professional Tax the same across India?", "expected": "No — PT is a state tax; it doesn't exist in some states and slabs/periodicity differ by state. Ask which state and confirm that state's schedule."}
+  ]
+}

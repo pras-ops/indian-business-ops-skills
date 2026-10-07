@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # GST rates, slabs and classification
 
 > Snapshot written October 2026. GST rates are changed by notification and were overhauled on

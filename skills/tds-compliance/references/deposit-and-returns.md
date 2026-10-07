@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # Depositing TDS and filing the returns
 
 > Snapshot written October 2026. Due dates and forms are set by the Income-tax Rules and change;

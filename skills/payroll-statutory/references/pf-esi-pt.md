@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # EPF, ESI and Professional Tax — mechanics
 
 > Snapshot written October 2026. Rates, wage ceilings and coverage thresholds change and are set by

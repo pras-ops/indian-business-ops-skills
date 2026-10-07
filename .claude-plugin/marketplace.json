@@ -1,0 +1,15 @@
+{
+  "name": "pras-ops",
+  "owner": {
+    "name": "Prashant Jacob",
+    "url": "https://github.com/pras-ops"
+  },
+  "plugins": [
+    {
+      "name": "indian-business-ops",
+      "source": "./",
+      "description": "Agent Skills for running a company in India — GST, TDS, payroll, ROC/MCA, registrations, invoicing/e-invoice and Tally. Workflow + deterministic helpers, with official-source verification.",
+      "version": "1.1.0"
+    }
+  ]
+}

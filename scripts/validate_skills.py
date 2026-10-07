@@ -11,23 +11,43 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).parent.parent
-ok = True
-for skill_md in sorted(ROOT.glob("skills/*/SKILL.md")):
+
+
+def problems_for(skill_md: Path) -> list[str]:
+    """Return a list of problems with one skill's SKILL.md (empty means valid)."""
     folder = skill_md.parent.name
     text = skill_md.read_text()
     m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
     if not m:
-        print(f"FAIL {folder}: no YAML frontmatter"); ok = False; continue
+        return ["no YAML frontmatter"]
     try:
         fm = yaml.safe_load(m.group(1)) or {}
     except yaml.YAMLError as e:
-        print(f"FAIL {folder}: invalid YAML ({e})"); ok = False; continue
+        return [f"invalid YAML ({e})"]
+    found = []
     name = str(fm.get("name", "")).strip()
     if name != folder:
-        print(f"FAIL {folder}: name '{name}' must equal the folder name"); ok = False
+        found.append(f"name '{name}' must equal the folder name '{folder}'")
     if not str(fm.get("description", "")).strip():
-        print(f"FAIL {folder}: missing description"); ok = False
-    if ok:
-        print(f"ok   {folder}")
-print("\nAll skills valid." if ok else "\nValidation failed.")
-sys.exit(0 if ok else 1)
+        found.append("missing description")
+    return found
+
+
+def main() -> int:
+    skills = sorted(ROOT.glob("skills/*/SKILL.md"))
+    all_ok = True
+    for skill_md in skills:
+        folder = skill_md.parent.name
+        issues = problems_for(skill_md)
+        if issues:
+            all_ok = False
+            for issue in issues:
+                print(f"FAIL {folder}: {issue}")
+        else:
+            print(f"ok   {folder}")
+    print("\nAll skills valid." if all_ok else "\nValidation failed.")
+    return 0 if all_ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

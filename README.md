@@ -1,132 +1,171 @@
 # Indian Business Ops — Agent Skills
 
+[![CI](https://github.com/pras-ops/indian-business-ops-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/pras-ops/indian-business-ops-skills/actions/workflows/ci.yml)
+![Deterministic evals: 17/17](https://img.shields.io/badge/deterministic%20evals-17%2F17-brightgreen.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Agent Skills](https://img.shields.io/badge/format-Agent%20Skills-6E56CF.svg)
 ![Jurisdiction: India](https://img.shields.io/badge/jurisdiction-India%20🇮🇳-FF9933.svg)
 
-A pack of [Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview)
-that teach Claude (or any agent that reads the same `SKILL.md` format) how to help run the
-statutory and bookkeeping side of a company in **India** — GST, TDS, payroll, ROC/MCA filings,
-registrations, invoicing and Tally.
+Agent Skills that help Claude (or any agent that reads the `SKILL.md` format) run the compliance
+side of a company in **India** — GST, TDS, payroll, ROC/MCA, registrations, invoicing and Tally.
+The model does the judgement; **bundled code does the exact numbers** (GSTIN/PAN validation, the
+CGST/SGST/IGST split), and live rates are confirmed on the official portal, never guessed.
 
-> [!IMPORTANT]
-> These skills encode **workflow, structure and checks** — not a frozen copy of the law. Indian
-> tax and company law change often (GST was overhauled in September 2025). Every skill routes the
-> agent to the **official portal** for the current rate, threshold or due date rather than
-> trusting a number baked into a file. This is an operations assistant, **not** a substitute for a
-> Chartered Accountant, Company Secretary or lawyer. Read [DISCLAIMER.md](DISCLAIMER.md).
+## See it work
 
-> [!WARNING]
-> **Content last reviewed: October 2026 — two large transitions are under way, so verify before
-> relying on any specifics.** A new **Income-tax Act, 2025** is reported to replace the Income-tax
-> Act, 1961, which **renumbers sections** — so the section numbers used in the TDS skill (192,
-> 194C, 194J, …) may no longer be current; confirm the present section on
-> https://www.incometax.gov.in. India's **four Labour Codes** are being brought into force, which
-> can change the statutory definition of *wages* and therefore **PF, ESI and gratuity** amounts;
-> confirm on https://www.epfindia.gov.in and the relevant code. The skills are built to send the
-> agent to these portals for the live position rather than to answer from the files.
+**You:** We got a bill from a new vendor, GSTIN `27AAPFU0939F1ZX`. Book ₹1,00,000 of consulting at
+18% GST — both of us are in Maharashtra.
 
----
+**Claude, with these skills:**
+
+> I validated the GSTIN first, and it doesn't pass — the check digit is wrong: `27AAPFU0939F1ZX`
+> should end in **`V`**, not `X` (a classic typo). A wrong GSTIN silently blocks your input tax
+> credit, so confirm it with the vendor before booking the bill.
+>
+> For ₹1,00,000 at 18%, intra-state (both in Maharashtra) → **CGST + SGST**:
+>
+> | | Amount |
+> |---|---|
+> | Taxable | ₹1,00,000 |
+> | CGST @ 9% | ₹9,000 |
+> | SGST @ 9% | ₹9,000 |
+> | **Invoice total** | **₹1,18,000** |
+>
+> (I took the rate as 18% — confirm the item's current rate on the GST portal; slabs changed in
+> Sept 2025.)
+
+Those numbers aren't the model doing mental math — they come from the bundled helper, so they're
+exact and reproducible:
+
+```bash
+$ python skills/gst-compliance/scripts/gst_calc.py validate 27AAPFU0939F1ZX
+{ "valid": false, "reason": "Check digit mismatch: expected 'V', got 'X' (likely a typo)" }
+
+$ python skills/gst-compliance/scripts/gst_calc.py split --taxable 100000 --rate 18 --intra
+{ "cgst": 9000.0, "sgst": 9000.0, "igst": 0.0, "total_tax": 18000.0, "invoice_total": 118000.0 }
+```
+
+Without the skills, an agent will often skip the checksum entirely and may invent a GST rate. That
+difference — validate, compute exactly, verify the rate — is the whole point of the pack.
 
 ## What's in the pack
 
 | Skill | What it helps with |
 |---|---|
-| [`gst-compliance`](skills/gst-compliance) | GST returns (GSTR-1 / 3B / 9), the current slab structure, HSN/SAC classification, input tax credit |
+| [`gst-compliance`](skills/gst-compliance) | GST returns (GSTR-1 / 3B / 9), the slab structure, HSN/SAC classification, input tax credit, + a GSTIN validator and tax-split helper |
 | [`tds-compliance`](skills/tds-compliance) | Which TDS section applies, deposit timing, quarterly returns (24Q/26Q/27Q), Form 16/16A |
 | [`payroll-statutory`](skills/payroll-statutory) | Salary structure, EPF, ESI, Professional Tax, gratuity, payslips, the monthly ECR |
 | [`company-roc-compliance`](skills/company-roc-compliance) | MCA/ROC annual filings (AOC-4, MGT-7/7A), DIR-3 KYC, statutory registers and board meetings |
-| [`business-registrations-licenses`](skills/business-registrations-licenses) | Picking an entity type and the registrations/licences it needs (PAN/TAN, GSTIN, Udyam, Shops & Establishments, IEC, FSSAI) |
+| [`business-registrations-licenses`](skills/business-registrations-licenses) | Picking an entity type and the registrations/licences it needs (PAN/TAN, GSTIN, Udyam, Shops & Est., IEC, FSSAI), + a PAN validator |
 | [`invoicing-einvoice-eway`](skills/invoicing-einvoice-eway) | A legally complete tax invoice, e-invoice (IRN/QR) applicability, and the e-way bill |
-| [`tally-operations`](skills/tally-operations) | Moving data in and out of Tally (XML/Excel), voucher structure, and reconciling books to returns |
+| [`tally-operations`](skills/tally-operations) | Moving data in and out of Tally (XML/Excel), voucher structure, reconciling books to returns |
 
-Each skill is a folder with a `SKILL.md` and, where the detail is large or volatile,
-a `references/` directory the agent reads only when it needs it. Where work must be exact
-(validating a GSTIN or PAN, splitting CGST/SGST/IGST), the skill calls a small **deterministic
-helper script** instead of asking the model to compute it.
+## Install
+
+### One command (Claude Code plugin)
+
+```bash
+claude plugin marketplace add pras-ops/indian-business-ops-skills
+claude plugin install indian-business-ops@pras-ops
+```
+
+> Plugin manifests (`.claude-plugin/`) are a newer Claude Code feature; if your version reports a
+> manifest error, use a download or copy below and please open an issue so it can be fixed.
+
+### One-click download (`.skill`)
+
+Pre-built, validated packages are in [`dist/`](dist/). On **Claude.ai / Claude apps**, download a
+`.skill` and open it, or upload it under **Settings → Capabilities → Skills**.
+
+| Skill | Download |
+|---|---|
+| GST | [`gst-compliance.skill`](dist/gst-compliance.skill) |
+| TDS / TCS | [`tds-compliance.skill`](dist/tds-compliance.skill) |
+| Payroll & statutory | [`payroll-statutory.skill`](dist/payroll-statutory.skill) |
+| Company / ROC | [`company-roc-compliance.skill`](dist/company-roc-compliance.skill) |
+| Registrations & licences | [`business-registrations-licenses.skill`](dist/business-registrations-licenses.skill) |
+| Invoicing / e-invoice / e-way | [`invoicing-einvoice-eway.skill`](dist/invoicing-einvoice-eway.skill) |
+| Tally | [`tally-operations.skill`](dist/tally-operations.skill) |
+
+### Copy from source
+
+```bash
+cp -r skills/gst-compliance ~/.claude/skills/   # one skill for your account
+cp -r skills/* .claude/skills/                  # the whole pack for a project
+```
+
+**Any other agent runtime** — the skills are plain Markdown with a small YAML header; point your
+loader at the `SKILL.md` files.
 
 ## Design doctrine
 
 > **The language model decides what to do. Code decides the numbers.**
 
-Exact computations and validation live in tested Python ([`tests/`](tests)); volatile law (rates,
-thresholds, due dates) is never hardcoded but confirmed on the official portal at run time;
-judgement and explanation stay with the model. This is the layer that sits *between* an AI agent
-and the business's software and portals — the "skills + deterministic engine" layer, not an action
-layer that files on its own. See [ARCHITECTURE.md](ARCHITECTURE.md).
+Exact computation and validation live in tested Python; volatile law (rates, thresholds, due
+dates) is never hardcoded but confirmed on the official portal at run time; judgement and
+explanation stay with the model. This is the layer *between* an AI agent and the business's
+software and portals — the skills + deterministic-engine layer, not an action layer that files on
+its own. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Install
+## Accuracy
 
-### One-click install (`.skill` download)
+The computational core is tested two ways: unit tests in [`tests/`](tests) and a labelled eval set
+in [`evals/`](evals). The deterministic questions (GSTIN validation, PAN decode, tax split) pass
+**17 / 17** and run in CI. The judgement questions (which TDS section, e-invoice applicability, …)
+are set up for a with-skill vs without-skill benchmark — see [`evals/README.md`](evals/README.md).
 
-Pre-built, validated `.skill` packages are in [`dist/`](dist/). On **Claude.ai / Claude apps**,
-download a `.skill` file and open it, or upload it under **Settings → Capabilities → Skills**
-(where your workspace allows custom skills) — it installs in one step.
+## Privacy
 
-| Skill | Download |
-|---|---|
-| GST | [`dist/gst-compliance.skill`](dist/gst-compliance.skill) |
-| TDS / TCS | [`dist/tds-compliance.skill`](dist/tds-compliance.skill) |
-| Payroll & statutory | [`dist/payroll-statutory.skill`](dist/payroll-statutory.skill) |
-| Company / ROC | [`dist/company-roc-compliance.skill`](dist/company-roc-compliance.skill) |
-| Registrations & licences | [`dist/business-registrations-licenses.skill`](dist/business-registrations-licenses.skill) |
-| Invoicing / e-invoice / e-way | [`dist/invoicing-einvoice-eway.skill`](dist/invoicing-einvoice-eway.skill) |
-| Tally | [`dist/tally-operations.skill`](dist/tally-operations.skill) |
-
-A `.skill` file is just a zip of the skill folder; rebuild them any time with
-[`scripts/build-skills.sh`](scripts/build-skills.sh).
-
-### From source (Claude Code)
-
-Copy any skill folder into your skills directory:
-
-```bash
-# one skill, for your user account
-cp -r skills/gst-compliance ~/.claude/skills/
-
-# or the whole pack for a single project
-cp -r skills/* .claude/skills/
-```
-
-The skill is picked up on the next run; the agent consults it when a task matches its
-`description`.
-
-**Claude.ai / Claude apps** — zip a skill folder and upload it under
-**Settings → Capabilities → Skills** (if your workspace allows custom skills).
-
-**Any other agent runtime** — the files are plain Markdown with a small YAML header
-(`name`, `description`). Point your loader at the `SKILL.md` files; nothing here is
-Claude-specific except the loading convention.
+GST/TDS work involves PANs, GSTINs and sometimes Aadhaar. Before pasting documents into any AI
+tool, **mask identifiers you don't need** (show only the last few characters), and never paste full
+Aadhaar numbers. For automatic, on-device redaction before text leaves your machine, see
+[RedactKit](https://github.com/pras-ops/redactkit).
 
 ## How a skill is built
 
 ```
 skills/<skill-name>/
-├── SKILL.md            # YAML frontmatter (name, description) + the workflow
-└── references/         # deeper, more volatile detail, read on demand
-    └── *.md
+├── SKILL.md       # YAML frontmatter (name, description) + the workflow
+├── references/    # deeper, volatile detail (each dated), read on demand
+└── scripts/       # deterministic helpers the skill calls for exact work
 ```
-
-The `description` in the frontmatter is what makes an agent reach for the skill, so it names the
-Indian forms and terms a user would actually type ("GSTR-3B", "194J", "Udyam", "e-way bill").
 
 ## Scope and limits
 
 - **Covers:** the recurring compliance a typical private limited company, LLP or proprietorship
-  runs into. It is a map and a checklist, not filled-in forms.
-- **Does not cover:** giving a binding legal opinion, computing someone's exact tax liability as
-  advice, or anything state-specific beyond pointing at the right authority. Professional Tax,
-  Shops & Establishments and labour rules differ by state — the skills say so and tell the agent
-  to check the specific state.
-- **Always verify** the live number on the official portal before filing. Links are in each
-  skill's references.
+  meets. A map and a checklist, not filled-in forms.
+- **Does not cover:** a binding legal opinion, a final tax-liability figure as advice, or
+  state-specific rules beyond pointing at the right authority (PT, Shops & Est. and labour rules
+  differ by state — the skills say so).
+- **Always verify** the live number on the official portal before filing.
+
+## Status, disclaimers and the law
+
+> [!IMPORTANT]
+> This is an operations assistant, **not** a substitute for a Chartered Accountant, Company
+> Secretary or lawyer. It encodes workflow and checks, not a frozen copy of the law, and routes to
+> the official portal for every current rate, threshold and due date. Read [DISCLAIMER.md](DISCLAIMER.md).
+
+> [!WARNING]
+> **Content last reviewed: October 2026 — two transitions are under way, so verify specifics.** A
+> new **Income-tax Act, 2025** is reported to replace the 1961 Act and **renumber sections**, so
+> the TDS section numbers (192, 194C, 194J, …) may have changed — confirm on
+> https://www.incometax.gov.in. India's **Labour Codes** are being brought into force and can
+> change the statutory definition of *wages* (PF/ESI/gratuity) — confirm on
+> https://www.epfindia.gov.in. Each reference file carries a `last_verified` date; CI flags any
+> older than 90 days.
+
+## Reviewed by
+
+Looking for practising **CAs / CSs** to review these skills for accuracy and be credited here. If
+that's you, open a [review issue](https://github.com/pras-ops/indian-business-ops-skills/issues/new)
+or a PR. Spotted something out of date? Use the **Law or rate changed** issue template.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). The most useful contributions are keeping the official
-links current and adding state-specific reference notes.
+See [CONTRIBUTING.md](CONTRIBUTING.md). The most valuable contributions are keeping the official
+links and dates current, adding state-specific notes, and adding real CA-grade eval questions.
 
 ## License
 
-[MIT](LICENSE) — the instructions are free to use and adapt. The law they point to is published
-by the Government of India.
+[MIT](LICENSE) — the instructions are free to use and adapt. The law they point to is published by
+the Government of India.

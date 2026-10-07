@@ -1,3 +1,4 @@
+<!-- last_verified: 2026-10-07 -->
 # Tally data exchange — formats and a voucher skeleton
 
 > Snapshot written October 2026. Tally's XML tags differ between **Tally Prime** and **Tally.ERP 9**
