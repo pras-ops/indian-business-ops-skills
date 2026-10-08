@@ -1,15 +1,13 @@
 ---
 name: company-roc-compliance
 description: >-
-  Help with Indian company and LLP compliance under the Companies Act 2013 and LLP Act, filed with
-  the Ministry of Corporate Affairs (MCA/ROC): annual filings (AOC-4 financial statements, MGT-7 /
-  MGT-7A annual return, LLP Form 8 and Form 11), director compliance (DIR-3 KYC, DIN), board and
-  general meetings, statutory registers and minutes, auditor appointment (ADT-1), and event-based
-  filings for changes in directors, capital, or registered office. Use this whenever the user
-  mentions MCA, ROC, Registrar of Companies, a company/LLP annual filing, AOC-4, MGT-7, DIR-3 KYC,
-  DIN, board meeting minutes, statutory registers, or annual compliance for a Pvt Ltd, OPC or LLP
-  in India — even if they just say "what do we need to file every year for our private limited
-  company".
+  Ongoing India company/LLP compliance for an ALREADY-INCORPORATED entity, under the Companies
+  Act / LLP Act and filed with MCA/ROC: annual filings (AOC-4, MGT-7/7A, LLP Form 8 and Form
+  11), DIR-3 KYC, board and general (AGM) meetings, statutory registers and minutes, auditor
+  appointment (ADT-1), and event-based filings (DIR-12, PAS-3, SH-7, CHG-1, INC-22). Use for
+  recurring MCA/ROC filings, annual compliance, director KYC, or statutory registers for a Pvt
+  Ltd / OPC / LLP. To first start or register a new business, or obtain a licence, use
+  business-registrations-licenses.
 ---
 
 # Company / LLP ROC compliance (India)

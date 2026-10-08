@@ -1,14 +1,13 @@
 ---
 name: payroll-statutory
 description: >-
-  Help run Indian payroll and its statutory obligations: building a salary structure (basic, HRA,
-  allowances, CTC vs gross vs net), Employees' Provident Fund (EPF/EPFO), Employees' State
-  Insurance (ESI/ESIC), Professional Tax (state-wise), Labour Welfare Fund, gratuity and bonus,
-  TDS on salary (section 192), payslips, and the monthly EPF ECR and ESI contribution. Use this
-  whenever the user mentions payroll, salary structure, CTC, payslip, PF/EPF/UAN, ESI/ESIC,
-  Professional Tax, gratuity, Form 16 for employees, or paying employees and their statutory
-  deductions in India — even if they only describe it ("set up salary breakup", "how much PF do we
-  cut").
+  India payroll and its statutory deductions: salary structure (CTC vs gross vs net),
+  Employees' Provident Fund (EPF/UAN), Employees' State Insurance (ESI), Professional Tax
+  (state-wise), Labour Welfare Fund, gratuity and bonus, payslips, the monthly EPF ECR and ESI
+  contribution, and estimating monthly salary TDS under section 192. Use for payroll, salary
+  breakup, CTC, payslips, PF/EPF/UAN, ESI/ESIC, Professional Tax, gratuity, Form 16 for
+  employees. For TDS on vendor/non-salary payments and the quarterly TDS returns themselves,
+  use tds-compliance.
 ---
 
 # Payroll and statutory deductions (India)

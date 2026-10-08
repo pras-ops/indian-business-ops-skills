@@ -1,14 +1,12 @@
 ---
 name: tally-operations
 description: >-
-  Help move data in and out of Tally (Tally Prime / Tally.ERP 9) and keep the books aligned with
-  GST and TDS filings: generating Tally-importable XML for vouchers, masters (ledgers, stock items)
-  and day-book entries, parsing Tally exports (XML / Excel / CSV day book, ledger, trial balance),
-  mapping fields to GST returns, and reconciling Tally data against GSTR-1 / GSTR-2B / 26AS. Use
-  this whenever the user mentions Tally, Tally Prime, Tally.ERP 9, importing/exporting Tally data,
-  Tally XML, vouchers, ledgers, day book, trial balance, or syncing accounting data between Tally
-  and GST/TDS workflows in India — even if they only say "import these sales into Tally" or
-  "reconcile our Tally books with the GST return".
+  Moving accounting data in and out of Tally (Tally Prime / Tally.ERP 9) and reconciling the
+  books to filings: generating Tally-importable XML (vouchers, ledgers, stock items), parsing
+  Tally exports (day book, ledger, trial balance in XML/Excel/CSV), mapping to GST returns,
+  and reconciling Tally data against GSTR-1 / GSTR-2B / Form 26AS. Use for Tally
+  import/export, Tally XML, vouchers/ledgers/day book/trial balance, or syncing the books with
+  GST/TDS. For the GST rules themselves use gst-compliance; for TDS rules use tds-compliance.
 ---
 
 # Tally operations (India)

@@ -49,15 +49,36 @@ difference — validate, compute exactly, verify the rate — is the whole point
 
 ## What's in the pack
 
-| Skill | What it helps with |
-|---|---|
-| [`gst-compliance`](skills/gst-compliance) | GST returns (GSTR-1 / 3B / 9), the slab structure, HSN/SAC classification, input tax credit, + a GSTIN validator and tax-split helper |
-| [`tds-compliance`](skills/tds-compliance) | Which TDS section applies, deposit timing, quarterly returns (24Q/26Q/27Q), Form 16/16A |
-| [`payroll-statutory`](skills/payroll-statutory) | Salary structure, EPF, ESI, Professional Tax, gratuity, payslips, the monthly ECR |
-| [`company-roc-compliance`](skills/company-roc-compliance) | MCA/ROC annual filings (AOC-4, MGT-7/7A), DIR-3 KYC, statutory registers and board meetings |
-| [`business-registrations-licenses`](skills/business-registrations-licenses) | Picking an entity type and the registrations/licences it needs (PAN/TAN, GSTIN, Udyam, Shops & Est., IEC, FSSAI), + a PAN validator |
-| [`invoicing-einvoice-eway`](skills/invoicing-einvoice-eway) | A legally complete tax invoice, e-invoice (IRN/QR) applicability, and the e-way bill |
-| [`tally-operations`](skills/tally-operations) | Moving data in and out of Tally (XML/Excel), voucher structure, reconciling books to returns |
+Seven focused skills in four groups, plus a **"start here" router** that points a broad or
+unsure request to the right one. Each skill owns one lane and hands off the adjacent one, so an
+agent (or a person) doesn't have to guess between overlapping choices.
+
+**▶ Start here** — [`india-business-ops-router`](skills/india-business-ops-router): for broad or
+multi-area asks ("what compliance does my startup need?"), it gives a who-does-what map and routes
+to the right skill below.
+
+**Tax & GST**
+| Skill | Owns | Not this → |
+|---|---|---|
+| [`gst-compliance`](skills/gst-compliance) | GST returns (GSTR-1/3B/9), rates, HSN/SAC, input tax credit; GSTIN validator + tax-split helper | the invoice document → `invoicing-einvoice-eway` |
+| [`invoicing-einvoice-eway`](skills/invoicing-einvoice-eway) | the sale *document*: tax-invoice fields, e-invoice (IRN/QR), e-way bill | GST returns & ITC → `gst-compliance` |
+
+**People & Payroll**
+| Skill | Owns | Not this → |
+|---|---|---|
+| [`payroll-statutory`](skills/payroll-statutory) | salary structure, EPF, ESI, Professional Tax, gratuity, payslips, salary TDS (192) | vendor/non-salary TDS → `tds-compliance` |
+| [`tds-compliance`](skills/tds-compliance) | TDS/TCS on vendor & non-salary payments (194-series, 195), deposits, 24Q/26Q/27Q, Form 16/16A | salaries & PF/ESI/PT → `payroll-statutory` |
+
+**Entity & Filings**
+| Skill | Owns | Not this → |
+|---|---|---|
+| [`business-registrations-licenses`](skills/business-registrations-licenses) | starting up: entity choice, PAN/TAN, GSTIN, Udyam, Shops & Est., IEC, FSSAI; PAN validator | ongoing annual filings → `company-roc-compliance` |
+| [`company-roc-compliance`](skills/company-roc-compliance) | after incorporation: MCA/ROC annual filings (AOC-4, MGT-7), DIR-3 KYC, registers | first-time registration → `business-registrations-licenses` |
+
+**Books & Data**
+| Skill | Owns | Not this → |
+|---|---|---|
+| [`tally-operations`](skills/tally-operations) | moving data in/out of Tally, reconciling books to GST/TDS filings | the GST/TDS rules themselves → `gst-compliance` / `tds-compliance` |
 
 ## Install
 
@@ -78,6 +99,7 @@ Pre-built, validated packages are in [`dist/`](dist/). On **Claude.ai / Claude a
 
 | Skill | Download |
 |---|---|
+| ▶ Start here (router) | [`india-business-ops-router.skill`](dist/india-business-ops-router.skill) |
 | GST | [`gst-compliance.skill`](dist/gst-compliance.skill) |
 | TDS / TCS | [`tds-compliance.skill`](dist/tds-compliance.skill) |
 | Payroll & statutory | [`payroll-statutory.skill`](dist/payroll-statutory.skill) |

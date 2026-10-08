@@ -1,13 +1,13 @@
 ---
 name: gst-compliance
 description: >-
-  Help with Indian GST (Goods and Services Tax) operations: preparing and understanding GST
-  returns (GSTR-1, GSTR-3B, GSTR-9, CMP-08), the QRMP scheme and IFF, HSN/SAC classification,
-  CGST/SGST/IGST split, reverse charge, and input tax credit (ITC) eligibility and reconciliation
-  against GSTR-2B. Use this whenever the user mentions GST, GSTIN, a GSTR form, HSN or SAC codes,
-  tax invoices under GST, input tax credit, e-invoicing for GST, or filing/paying GST in India —
-  even if they only describe the task ("file our monthly sales return", "why can't I claim credit
-  on this bill") without naming the form.
+  India GST operations: GST returns (GSTR-1, GSTR-3B, GSTR-9, CMP-08), the QRMP scheme and
+  IFF, HSN/SAC classification and slab rates, the CGST/SGST/IGST split, reverse charge, and
+  input tax credit (ITC) eligibility and GSTR-2B reconciliation; bundles a GSTIN validator and
+  a tax-split helper. Use when the task is a GST return, a GST rate or ITC question,
+  validating a GSTIN, or how much GST applies. NOT for the invoice document itself (mandatory
+  fields, e-invoice IRN/QR, e-way bill) — that is invoicing-einvoice-eway; NOT for moving data
+  in/out of Tally — that is tally-operations.
 ---
 
 # GST compliance (India)

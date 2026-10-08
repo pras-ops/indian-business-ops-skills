@@ -1,15 +1,14 @@
 ---
 name: tds-compliance
 description: >-
-  Help with Indian TDS and TCS (tax deducted/collected at source) under the Income-tax Act:
-  deciding which section applies to a payment (192 salary, 194C contractors, 194J professional/
-  technical fees, 194H commission, 194I rent, 194Q purchase of goods, 194O e-commerce, etc.),
-  the deduction rate and threshold, higher rates for missing PAN or non-filers, depositing TDS by
-  challan, filing quarterly returns (24Q, 26Q, 27Q, 27EQ) and issuing Form 16 / 16A / 16B. Use
-  this whenever the user mentions TDS, TCS, a 194-series section, Form 16, Form 26Q/24Q, a TDS
-  challan, deducting tax on a vendor or salary payment, Form 26AS or AIS, or a TDS notice/default
-  in India — even if they just describe it ("how much tax do we hold back on this consultant's
-  bill").
+  India TDS/TCS under the Income-tax Act on VENDOR and other non-salary payments: choosing the
+  section (194C contractors, 194J professional/technical fees, 194H commission, 194I rent,
+  194Q goods, 194O e-commerce, 195 non-resident, TCS), the rate and threshold, PAN-missing and
+  non-filer uplifts, depositing by challan, the quarterly returns (24Q/26Q/27Q/27EQ) and Form
+  16/16A, and Form 26AS/AIS reconciliation. Use for TDS/TCS on payments to contractors,
+  professionals, landlords, non-residents, 194-series questions, TDS
+  challans/returns/certificates. For salary structure and the PF/ESI/Professional-Tax
+  deductions and monthly salary-TDS estimation, use payroll-statutory.
 ---
 
 # TDS / TCS compliance (India)

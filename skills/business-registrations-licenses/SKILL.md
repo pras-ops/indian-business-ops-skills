@@ -1,14 +1,13 @@
 ---
 name: business-registrations-licenses
 description: >-
-  Help set up a business in India and figure out which registrations and licences it needs:
-  choosing an entity type (proprietorship, partnership, LLP, One Person Company, Private Limited),
-  and the registrations that follow — PAN and TAN, GST registration (GSTIN), Udyam/MSME, Shops &
-  Establishments (state), Professional Tax registration, Importer-Exporter Code (IEC), FSSAI (food),
-  trade licence, and sector permits. Use this whenever the user asks how to register or start a
-  company/business in India, which licence they need, how to get a GSTIN or Udyam or IEC or FSSAI,
-  which business structure to pick, or what statutory registrations a new Indian business must
-  obtain — even if phrased loosely ("what do I need to legally start selling online in India").
+  Setting up a NEW business in India and the registrations/licences it needs: choosing the
+  entity type (proprietorship, partnership, LLP, One Person Company, Private Limited) and
+  obtaining PAN/TAN, GST registration (GSTIN), Udyam/MSME, Shops & Establishments,
+  Professional Tax registration, Importer-Exporter Code (IEC), FSSAI and trade licences;
+  bundles a PAN validator. Use for how to start or register a business, which licence or
+  registration is needed, entity-type choice, or getting a GSTIN/Udyam/IEC/FSSAI. For
+  recurring annual MCA/ROC filings after incorporation, use company-roc-compliance.
 ---
 
 # Business registrations and licences (India)

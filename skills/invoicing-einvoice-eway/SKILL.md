@@ -1,13 +1,12 @@
 ---
 name: invoicing-einvoice-eway
 description: >-
-  Help produce GST-compliant documents for Indian sales: a legally complete tax invoice (mandatory
-  fields, GSTIN, HSN/SAC, CGST/SGST/IGST split, place of supply), bill of supply (exempt/
-  composition), credit and debit notes, e-invoicing (generating the IRN and QR code via the IRP
-  when applicable), and the e-way bill for moving goods. Use this whenever the user asks what must
-  be on a GST invoice, how to make an invoice template, whether e-invoicing or an e-way bill
-  applies to them, how IRN/QR works, or about invoice numbering, credit notes, or document rules
-  for an Indian business — even if phrased as "make us a proper invoice format".
+  Producing GST-compliant SALE DOCUMENTS in India: a tax invoice with all mandatory fields, a
+  bill of supply, credit/debit notes, e-invoicing (generating the IRN and QR code via the
+  IRP), and the e-way bill for moving goods. Use when the task is making an invoice or invoice
+  template, invoice numbering, a credit/debit note, or deciding whether e-invoice (IRN/QR) or
+  an e-way bill applies. For GST returns, rates, classification and input tax credit use
+  gst-compliance instead.
 ---
 
 # Invoicing, e-invoice and e-way bill (India)
