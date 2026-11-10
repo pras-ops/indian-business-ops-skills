@@ -24,11 +24,12 @@ quarterly returns and issue the certificates.
 > Income Tax Department site (https://www.incometax.gov.in) or the TRACES portal
 > (https://www.tdscpc.gov.in). The reference files here are dated snapshots.
 >
-> **Section renumbering:** a new Income-tax Act, 2025 is reported to replace the 1961 Act and
-> change section numbers. The 192 / 194-series numbers used below are the long-standing ones and
-> may no longer be current — identify the payment type first (salary, contract, professional fee,
-> rent, …) and confirm the *present* section and rate on the portal rather than relying on the
-> number itself.
+> **Section renumbering:** the Income-tax Act, 2025 applies from 1 April 2026. TDS on payments to
+> residents is in section 393(1), as one table, and the reference file maps each old 194-series
+> number to its serial there. The 192 / 194-series numbers used below are the 1961 Act ones and
+> apply to payments up to 31 March 2026 — identify the payment type first (salary, contract,
+> professional fee, rent, …), then quote the section for the payment date and confirm the rate on
+> the portal.
 
 ## The four questions, in order
 
